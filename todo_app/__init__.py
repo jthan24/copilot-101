@@ -12,7 +12,7 @@ from flask import Flask
 # Almacenamiento global en memoria para las tareas
 # Estructura: {id: {'id': int, 'titulo': str, 'completada': bool}}
 tasks_db = {}
-task_counter = 1
+task_counter = [1]  # Usando lista para poder mutarla en funciones
 
 
 def create_app():
