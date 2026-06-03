@@ -1,0 +1,28 @@
+# Archivo de configuración de Docker Compose
+# Permite ejecutar la aplicación con un solo comando
+
+version: '3.8'
+
+services:
+  # Servicio principal de la aplicación Flask
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: todo-list-app
+    ports:
+      - "5000:5000"
+    environment:
+      FLASK_APP: todo_app/run.py
+      FLASK_ENV: production
+      PYTHONUNBUFFERED: 1
+    volumes:
+      # Monta el código fuente para desarrollo (opcional)
+      - .:/app
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
